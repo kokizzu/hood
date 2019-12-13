@@ -3,6 +3,7 @@ package hood
 import (
 	"fmt"
 	"reflect"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -161,12 +162,10 @@ func (d *base) QuerySql(hood *Hood) (string, []interface{}) {
 		}
 	}
 	if x := hood.limit; x > 0 {
-		query = append(query, "LIMIT ?")
-		args = append(args, hood.limit)
+		query = append(query, "LIMIT " + strconv.Itoa(x))
 	}
 	if x := hood.offset; x > 0 {
-		query = append(query, "OFFSET ?")
-		args = append(args, hood.offset)
+		query = append(query, "OFFSET "+strconv.Itoa(x))
 	}
 	return hood.substituteMarkers(strings.Join(query, " ")), args
 }
